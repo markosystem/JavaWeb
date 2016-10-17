@@ -1,2 +1,2 @@
-# JavaWeb
-Este projeto faz parte dos conteúdos do Minicurso: Introdução ao desenvolvimento de aplicações web com JAVA, realizado em 19/10/2016 na Universidade do Tocantins.
+# Bem vindo ao Minicurso: Introdução ao desenvolvimento de aplicações web com JAVA
+Este projeto faz parte de um dos conteúdos estudados e aplicados em sala em um minicurso, realizado em 19/10/2016 na Universidade do Tocantins. O Projeto visa levar uma compreensão estrutural do desenvolvimento de uma aplicação web utilizando os principais componentes adotados pela comunidade Java, como por exemplo: JSF, MVC, EclipseLink/JPA, Maven e entre outros.
