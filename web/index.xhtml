@@ -1,0 +1,69 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="template.xhtml"
+>
+    <ui:define name="conteudo">
+        <h:form id="form">
+            <p:messages id="msg" closable="true"/>
+
+            <h2>Agenda Telefônica</h2>
+            <p:panelGrid columns="2" id="infoContato">
+                <h:outputText value="Nome:"/>
+                <p:inputText value="#{contatoController.contato.nome}"/>
+                <h:outputText value="Número:"/>
+                <p:panel>
+                    <p:inputMask value="#{contatoController.telefone.ddd}" placeholder="DDD" styleClass="ddd"
+                                 mask="(99)"/>
+                    <p:inputMask value="#{contatoController.telefone.numero}" placeholder="Número" styleClass="numero"
+                                 mask="9999-9999?9"/>
+                    <p:inputMask value="#{contatoController.telefone.ramal}" placeholder="Ramal" styleClass="ramal"
+                                 mask="99?9"/>
+                    <p:commandButton ajax="true" value="Ok" update="foneList,infoContato"
+                                     actionListener="#{contatoController.addNumero}"/>
+                </p:panel>
+            </p:panelGrid>
+            <p:dataTable value="#{contatoController.contato.listTelefone}" var="fone" id="foneList">
+                <p:column>
+                    <f:facet name="header">Número</f:facet>
+                    #{fone.ddd} #{fone.numero} - #{fone.ramal}
+                </p:column>
+                <p:column>
+                    <f:facet name="header">Ação</f:facet>
+                    <p:commandButton actionListener="#{contatoController.removerNumero(fone)}" value="Remover"
+                                     update="foneList" process="@this"/>
+                </p:column>
+            </p:dataTable>
+            <p:commandButton id="insertContato"
+                             value="#{contatoController.contato.id == null ? 'Inserir':'Alterar'} Registro"
+                             actionListener="#{contatoController.save}" update="form" process="@form"/>
+
+            <h2>Registros:</h2>
+            <p:dataTable value="#{contatoController.list}" var="contato">
+                <p:column>
+                    <f:facet name="header">ID</f:facet>
+                    #{contato.id}
+                </p:column>
+                <p:column>
+                    <f:facet name="header">Nome</f:facet>
+                    #{contato.nome}
+                </p:column>
+                <p:column>
+                    <f:facet name="header">Telefone</f:facet>
+                    <p:dataList value="#{contato.listTelefone}" var="fone">
+                        #{fone.ddd} #{fone.numero} - #{fone.ramal}
+                    </p:dataList>
+                </p:column>
+                <p:column>
+                    <p:commandButton value="Excluir" process="@this" update="@all"
+                                     actionListener="#{contatoController.delete(contato)}"/>
+                    <p:commandButton value="Alterar" process="@this"
+                                     update="form:infoContato,form:foneList,form:insertContato"
+                                     actionListener="#{contatoController.alterar(contato)}"/>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </ui:define>
+</ui:composition>
